@@ -1,10 +1,11 @@
 import React, { use, useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes , FaInfoCircle, FaEdit} from 'react-icons/fa';
+import { Link } from 'react-router';
 
 const User = ({userPromise}) => {
 
     const initialUsers = use(userPromise)
-    console.log(initialUsers)
+    // console.log(initialUsers)
     const [users, setUsers] = useState(initialUsers)
 
      const handleAddUser = (e)=>{
@@ -116,14 +117,35 @@ const handleUserDelete =(id)=>{
           <tr key={user._id} className="hover:bg-blue-50 transition">
             <td className="py-3 px-6 border-b">{user.name}</td>
             <td className="py-3 px-6 border-b">{user.email}</td>
-            <td className="py-3 px-6 border-b text-center">
-              {/* Delete icon only */}
-              <button
-              onClick={()=>handleUserDelete(user._id)}
-              className="text-red-500 hover:text-red-700 text-lg">
-                <FaTimes />
-              </button>
-            </td>
+            <td className="py-3 px-6 border-b text-center space-x-4">
+  {/* Details */}
+  <Link
+    to={`/user/${user._id}`}
+    className="text-blue-600 hover:text-blue-800 text-xl inline-block"
+    title="View Details"
+  >
+   <p>Details</p>  <FaInfoCircle />
+  </Link>
+
+  {/* Update */}
+  <Link
+    to={`/update/${user._id}`}
+    className="text-yellow-500 hover:text-yellow-700 text-xl inline-block"
+    title="Update User"
+  >
+   <p>update</p> <FaEdit />
+  </Link>
+
+  {/* Delete */}
+  <button
+    onClick={() => handleUserDelete(user._id)}
+    className="text-red-500 hover:text-red-700 text-xl inline-block"
+    title="Delete User"
+  >
+   <p>Delete</p> <FaTimes />
+  </button>
+</td>
+
           </tr>
         ))}
       </tbody>
